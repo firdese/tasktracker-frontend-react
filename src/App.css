@@ -8,6 +8,7 @@
   height: 64px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 1.25rem;
   border-bottom: 1px solid #d9dbe1;
   background: #ffffff;
@@ -17,6 +18,30 @@
   margin: 0;
   font-size: 1.25rem;
   color: #0f172a;
+}
+
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.auth-user {
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+.logout-btn {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 8px;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #f8fafc;
 }
 
 .app-layout {

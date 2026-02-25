@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { Navigate, NavLink, Route, Routes, useParams } from 'react-router-dom'
 import './App.css'
+import keycloak from './keycloak'
 
 type Task = {
   id: string
@@ -69,10 +71,40 @@ function TaskGroupPage() {
 }
 
 function App() {
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      keycloak.updateToken(30).catch(() => {
+        keycloak.login()
+      })
+    }, 15000)
+
+    return () => {
+      window.clearInterval(interval)
+    }
+  }, [])
+
+  const displayName =
+    keycloak.tokenParsed?.name ??
+    keycloak.tokenParsed?.preferred_username ??
+    keycloak.tokenParsed?.email ??
+    'User'
+
+  const handleLogout = () => {
+    void keycloak.logout({
+      redirectUri: window.location.origin,
+    })
+  }
+
   return (
     <div className="app-shell">
       <header className="app-header">
         <h1>TaskTracker App</h1>
+        <div className="auth-actions">
+          <span className="auth-user">{displayName}</span>
+          <button type="button" className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </header>
 
       <div className="app-layout">
